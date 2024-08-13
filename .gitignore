@@ -1,3 +1,4 @@
 # ignore ALL .log files
 *.log
-/node_modules/
+node_modules
+.env
