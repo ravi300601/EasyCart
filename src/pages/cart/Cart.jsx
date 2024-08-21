@@ -11,8 +11,8 @@ import { fireDB } from '../../firebase/FirebaseConfig';
 
 function Cart() {
 
-  const context = useContext(myContext)
-  const { mode } = context;
+    const context = useContext(myContext)
+    const { mode } = context;
 
     const dispatch = useDispatch()
     const cartItems = useSelector((state) => state.cart);
