@@ -11,14 +11,14 @@ function Navbar() {
   const [open, setOpen] = useState(false)
 
   const user = JSON.parse(localStorage.getItem('user'));
+  const context = useContext(myContext)
+  const { toggleMode, mode, setLoading } = context
 
   const logout = () => {
    localStorage.clear('user');
+   setLoading(false);
    window.location.href = '/login'
   }
-
-  const context = useContext(myContext)
-  const { toggleMode, mode } = context
 
   const cartItems = useSelector((state) => state.cart)
 

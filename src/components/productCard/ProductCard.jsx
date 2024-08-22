@@ -6,19 +6,48 @@ import { toast } from 'react-toastify';
 
 function ProductCard() {
     const context = useContext(myContext);
-    const { mode, product } = context;
+    const { mode, product, cartQuantity, setCartQuantity } = context;
 
     const dispatch = useDispatch()
     const cartItems = useSelector((state) => state.cart);
 
     const addCart = (product) => {
+
+        const existingProduct = cartQuantity.find(item => item.id === product.id);
+
+        if (existingProduct) {
+            // Increment quantity if the product already exists in the cart
+            setCartQuantity(cartQuantity.map(item =>
+                item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+            ));
+        } else {
+            // Add new product to cart with quantity 1
+            setCartQuantity([...cartQuantity, { id: product.id, quantity: 1 }]);
+        }
+
         dispatch(addToCart(product));
         toast.success('Product added to Cart');
     }
 
+    const addQuantity = (item, increment) => {
+        setCartQuantity(cartQuantity.map(cartItem => {
+            if (cartItem.id === item.id) {
+                const newQuantity = increment ? cartItem.quantity + 1 : Math.max(0, cartItem.quantity - 1);
+                return { ...cartItem, quantity: newQuantity };
+            }
+            return cartItem;
+        }).filter(item => item.quantity > 0));
+    }
+
+    const getItemQuantity = (item) => {
+        const cartItem = cartQuantity.find(cartItem => cartItem.id === item.id);
+        return cartItem ? cartItem.quantity : 0;
+    };
+
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cartItems));
-    }, [cartItems])
+        localStorage.setItem('cartQuantity', JSON.stringify(cartQuantity));
+    }, [cartItems, cartQuantity])
 
 
     return (
@@ -32,6 +61,7 @@ function ProductCard() {
                 <div className="flex flex-wrap -m-4">
                     {product.map((item, index)=> {
                         const { title, price, description, imageUrl } = item;
+                        const quantityInCart = getItemQuantity(item);
                         return (
                             <div key={index} className="p-4 md:w-1/4  drop-shadow-lg " >
                                 <div className="h-full border-2 hover:shadow-gray-100 hover:shadow-2xl transition-shadow duration-300 ease-in-out    border-gray-200 border-opacity-60 rounded-2xl overflow-hidden" style={{ backgroundColor: mode === 'dark' ? 'rgb(46 49 55)' : '', color: mode === 'dark' ? 'white' : '', }} >
@@ -43,9 +73,17 @@ function ProductCard() {
                                         <h1 className="title-font text-lg font-medium text-gray-900 mb-3" style={{ color: mode === 'dark' ? 'white' : '', }}>{title}</h1>
                                         {/* <p className="leading-relaxed mb-3">{item.description.}</p> */}
                                         <p className="leading-relaxed mb-3" style={{ color: mode === 'dark' ? 'white' : '' }}>₹{price}</p>
-                                        <div className=" flex justify-center">
-                                            <button type="button" onClick={()=>addCart(item)} className="focus:outline-none text-white bg-sky-500 hover:bg-sky-600 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm w-full  py-2">Add To Cart</button>
-                                        </div>
+                                        {quantityInCart === 0 ? (
+                                            <div className="flex justify-center">
+                                                <button type="button" onClick={() => addCart(item)} className="focus:outline-none text-white bg-sky-500 hover:bg-sky-600 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm w-full py-2">Add To Cart</button>
+                                            </div>
+                                        ) : (
+                                            <div className="button-group flex justify-center">
+                                                <button onClick={() => addQuantity(item, true)} className="bg-gray-500 text-white font-bold text-xs py-2 px-4 rounded-l-lg">+</button>
+                                                <button className="bg-gray-300 text-gray-800 font-bold py-2 px-4 text-xs">{quantityInCart}</button>
+                                                <button onClick={() => addQuantity(item, false)} className="bg-gray-500 text-white font-bold py-2 px-4 rounded-r-lg text-xs">-</button>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>

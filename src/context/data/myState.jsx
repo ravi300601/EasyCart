@@ -135,10 +135,20 @@ function myState(props) {
         }
     }
 
+    const [cartQuantity, setCartQuantity] = useState(() => {
+        // Load cartQuantity from localStorage or initialize as an empty array
+        return JSON.parse(localStorage.getItem('cartQuantity')) || [];
+    });
+
+    useEffect(() => {
+        // Update localStorage whenever cartQuantity changes
+        localStorage.setItem('cartQuantity', JSON.stringify(cartQuantity));
+    }, [cartQuantity]);
+
     return (
         <MyContext.Provider value={{mode, toggleMode, loading, setLoading,
         product, products, setProducts, addProduct,
-        edithandle, updateProduct, deleteProduct }}>
+        edithandle, updateProduct, deleteProduct, cartQuantity, setCartQuantity }}>
             {props.children}
         </MyContext.Provider>
     )
