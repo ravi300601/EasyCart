@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import MyContext from './myContext'
-import { QuerySnapshot, Timestamp, addDoc, collection, deleteDoc, doc, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
+import { QuerySnapshot, Timestamp, addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import { fireDB } from '../../firebase/FirebaseConfig';
 
@@ -140,6 +140,29 @@ function myState(props) {
         return JSON.parse(localStorage.getItem('cartQuantity')) || [];
     });
 
+    const [order, setOrder] = useState([]);
+
+    const getOrderData = async () => {
+        setLoading(true)
+        try {
+            const result = await getDocs(collection(fireDB, "orders"))
+            const ordersArray = [];
+            result.forEach((doc) => {
+            ordersArray.push(doc.data());
+            setLoading(false)
+            });
+            setOrder(ordersArray);
+            setLoading(false);
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        getOrderData();
+    }, []);
+
     useEffect(() => {
         // Update localStorage whenever cartQuantity changes
         localStorage.setItem('cartQuantity', JSON.stringify(cartQuantity));
@@ -147,7 +170,7 @@ function myState(props) {
 
     return (
         <MyContext.Provider value={{mode, toggleMode, loading, setLoading,
-        product, products, setProducts, addProduct,
+        product, products, setProducts, addProduct, order,
         edithandle, updateProduct, deleteProduct, cartQuantity, setCartQuantity }}>
             {props.children}
         </MyContext.Provider>
