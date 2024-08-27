@@ -195,10 +195,16 @@ function myState(props) {
         localStorage.setItem('cartQuantity', JSON.stringify(cartQuantity));
     }, [cartQuantity]);
 
+    const [searchkey, setSearchkey] = useState('')
+    const [filterType, setFilterType] = useState('')
+    const [filterPrice, setFilterPrice] = useState('')
+
+
     return (
         <MyContext.Provider value={{mode, toggleMode, loading, setLoading,
         product, products, setProducts, addProduct, order, user,
-        edithandle, updateProduct, deleteProduct, cartQuantity, setCartQuantity }}>
+        edithandle, updateProduct, deleteProduct, cartQuantity, setCartQuantity,
+        searchkey, setSearchkey, filterPrice, setFilterPrice, filterType, setFilterType }}>
             {props.children}
         </MyContext.Provider>
     )
