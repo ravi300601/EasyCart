@@ -1,23 +1,103 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Layout from '../../components/layout/Layout'
+import myContext from '../../context/data/myContext';
+import { useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { doc, getDoc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
+import { addToCart, deleteFromCart } from '../../redux/cartSlice';
+import { fireDB } from '../../firebase/FirebaseConfig';
+import Loader from '../../components/loader/Loader';
 
 function ProductInfo() {
+    const context = useContext(myContext);
+    const { mode, loading, setLoading, cartQuantity, setCartQuantity } = context;
+
+    const [products, setProducts] = useState('')
+    const params = useParams()
+
+    const dispatch = useDispatch()
+    const cartItems = useSelector((state) => state.cart)
+
+    const getProductData = async () => {
+        setLoading(true)
+        try {
+            const productTemp = await getDoc(doc(fireDB, "products", params.id))
+            setProducts(productTemp.data());
+            setLoading(false)
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
+        }
+    }
+
+    const addQuantity = (item, increment) => {
+        setCartQuantity(cartQuantity.map(cartItem => {
+            if (cartItem.id === item.id) {
+                const newQuantity = increment ? cartItem.quantity + 1 : Math.max(0, cartItem.quantity - 1);
+                return { ...cartItem, quantity: newQuantity };
+            }
+            return cartItem;
+        }).filter(item => item.quantity > 0));
+    }
+
+    const getItemQuantity = (item) => {
+        const cartItem = cartQuantity.find(cartItem => cartItem.id === item.id);
+        return cartItem ? cartItem.quantity : 0;
+    };
+
+    useEffect(() => {
+        getProductData()
+    }, [])
+
+    // add to cart
+    const addCart = (product) => {
+        const existingProduct = cartQuantity.find(item => item.id === product.id);
+
+        if (existingProduct) {
+            // Increment quantity if the product already exists in the cart
+            setCartQuantity(cartQuantity.map(item =>
+                item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+            ));
+        } else {
+            // Add new product to cart with quantity 1
+            setCartQuantity([...cartQuantity, { id: product.id, quantity: 1 }]);
+        }
+
+        dispatch(addToCart(product));
+        toast.success('Product added to Cart');
+    }
+
+    useEffect(() => {
+        cartItems.forEach((cartItem) => {
+            const cartItemQuantity = getItemQuantity(cartItem);
+            if (cartItemQuantity < 1){
+                dispatch(deleteFromCart(cartItem));
+                return
+            }
+        })
+        localStorage.setItem('cart', JSON.stringify(cartItems));
+        localStorage.setItem('cartQuantity', JSON.stringify(cartQuantity));
+    }, [cartItems, cartQuantity])
+
     return (
         <Layout>
-            <section className="text-gray-600 body-font overflow-hidden">
-                <div className="container px-4 py-32 mx-auto">
+            {loading && <Loader />}
+            <section className="text-gray-600 body-font overflow-hidden" style={{ color: mode === 'dark' ? 'white' : '' }}>
+                <div className="container px-5 py-10 mx-auto">
+                    {products && 
                     <div className="lg:w-4/5 mx-auto flex flex-wrap">
                         <img
                             alt="ecommerce"
-                            className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
-                            src="https://dummyimage.com/400x400"
+                            className="lg:w-1/3 w-full lg:h-auto  object-cover object-center rounded"
+                            src={products.imageUrl}
                         />
                         <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                             <h2 className="text-sm title-font text-gray-500 tracking-widest">
                                 BRAND NAME
                             </h2>
-                            <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                                The Catcher in the Rye
+                            <h1 className="text-gray-900 text-3xl title-font font-medium mb-1" style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                {products.title}
                             </h1>
                             <div className="flex mb-4">
                                 <span className="flex items-center">
@@ -117,21 +197,22 @@ function ProductInfo() {
                                     </a>
                                 </span>
                             </div>
-                            <p className="leading-relaxed border-b-2 mb-5 pb-5">
-                                Fam locavore kickstarter distillery. Mixtape chillwave tumeric
-                                sriracha taximy chia microdosing tilde DIY. XOXO fam indxgo juiceramps
-                                cornhole raw denim forage brooklyn. Everyday carry +1 seitan poutine
-                                tumeric. Gastropub blue bottle austin listicle pour-over, neutra jean
-                                shorts keytar banjo tattooed umami cardigan.
+                            <p className="leading-relaxed border-b-2 mb-5 pb-5" style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                {products.description}
                             </p>
-                         
+
                             <div className="flex">
-                                <span className="title-font font-medium text-2xl text-gray-900">
-                                    $58.00
+                                <span className="title-font font-medium text-2xl text-gray-900" style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                ₹{products.price}
                                 </span>
-                                <button className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
-                                    Add To Cart
-                                </button>
+                                
+                                {getItemQuantity(products) == 0 ? (
+                                    <button type="button" onClick={() => addCart(products)} className="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Add To Cart</button>
+                                ) : (<>
+                                    <button onClick={() => addQuantity(products, true)} className="bg-gray-500 ml-auto text-white font-bold text-xs py-2 px-6 rounded-l-lg">+</button>
+                                    <button className="bg-gray-300 text-gray-800 font-bold py-2 px-6 text-xs">{getItemQuantity(products)}</button>
+                                    <button onClick={() => addQuantity(products, false)} className="bg-gray-500 text-white font-bold py-2 px-6 rounded-r-lg text-xs">-</button>
+                                </>)}
                                 <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                                     <svg
                                         fill="currentColor"
@@ -146,7 +227,7 @@ function ProductInfo() {
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </div>}
                 </div>
             </section>
         </Layout>
