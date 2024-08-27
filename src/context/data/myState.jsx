@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import MyContext from './myContext'
-import { QuerySnapshot, Timestamp, addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
+import { Timestamp, addDoc, collection, deleteDoc, doc, getDocs, onSnapshot, orderBy, query, setDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
 import { fireDB } from '../../firebase/FirebaseConfig';
 
@@ -159,8 +159,35 @@ function myState(props) {
         }
     }
 
+    const [user, setUser] = useState([]);
+
+    const getUserData = async () => {
+        setLoading(true)
+        try {
+        const result = await getDocs(collection(fireDB, "users"))
+        const usersArray = [];
+        result.forEach((doc) => {
+            const docData = doc.data();
+
+            const updatedDocData = {
+                ...docData,
+                date: docData.time.toDate().toString() // Assuming time is stored in Firestore Timestamp format
+            };
+            usersArray.push(updatedDocData);
+            setLoading(false)
+        });
+            setUser(usersArray);
+            setLoading(false);
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
+        }
+    }
+
+
     useEffect(() => {
         getOrderData();
+        getUserData();
     }, []);
 
     useEffect(() => {
@@ -170,7 +197,7 @@ function myState(props) {
 
     return (
         <MyContext.Provider value={{mode, toggleMode, loading, setLoading,
-        product, products, setProducts, addProduct, order,
+        product, products, setProducts, addProduct, order, user,
         edithandle, updateProduct, deleteProduct, cartQuantity, setCartQuantity }}>
             {props.children}
         </MyContext.Provider>
