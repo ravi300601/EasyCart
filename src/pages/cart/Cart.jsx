@@ -216,7 +216,7 @@ function Cart() {
                 </div>
             </div>
         </Layout>
-  )
+    )
 }
 
 export default Cart
