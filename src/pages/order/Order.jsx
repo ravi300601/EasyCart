@@ -10,7 +10,6 @@ function Order() {
   return (
     <Layout>
 		{loading && <Loader />}
-			{/* {order.filter(obj => obj.userid == userid).length} */}
 		{order.filter(obj => obj.userid == userid).length > 0 ?
 			(<>
 			<div className=" h-full pt-10">

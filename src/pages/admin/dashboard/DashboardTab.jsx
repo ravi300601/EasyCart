@@ -9,16 +9,6 @@ import { Link } from 'react-router-dom';
 function DashboardTab() {
     const context = useContext(myContext)
     const { mode, product, edithandle, deleteProduct, order, user } = context
-    
-    let [isOpen, setIsOpen] = useState(false)
-
-    function closeModal() {
-        setIsOpen(false)
-    }
-
-    function openModal() {
-        setIsOpen(true)
-    }
 
     const add = () => {
         window.location.href = '/addproduct'
