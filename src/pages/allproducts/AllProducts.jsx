@@ -73,7 +73,7 @@ function Allproducts() {
 
                     <div className="flex flex-wrap -m-4">
                         {product.filter((obj)=> obj.title.toLowerCase().includes(searchkey))
-                        .filter((obj) => obj.category.toLowerCase().includes(filterType))
+                        .filter((obj) => obj.category.toLowerCase().includes(filterType.toLowerCase()))
                         .filter((obj) => obj.price.includes(filterPrice)).map((item, index) => {
                             const { title, price, description, imageUrl,id } = item;
                             const quantityInCart = getItemQuantity(item);
@@ -85,7 +85,7 @@ function Allproducts() {
                                                 <img className=" rounded-2xl w-full h-80 p-2 hover:scale-110 transition-scale-110  duration-300 ease-in-out" src={imageUrl} alt="blog" />
                                             </div>
                                             <div className="p-5 border-t-2">
-                                                <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1" style={{ color: mode === 'dark' ? 'white' : '', }}>E-Bharat</h2>
+                                                <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1" style={{ color: mode === 'dark' ? 'white' : '', }}>Easy Cart</h2>
                                                 <h1 className="title-font text-lg font-medium text-gray-900 mb-3" style={{ color: mode === 'dark' ? 'white' : '', }}>{title}</h1>
                                                 {/* <p className="leading-relaxed mb-3">{item.description.}</p> */}
                                                 <p className="leading-relaxed mb-1" style={{ color: mode === 'dark' ? 'white' : '' }}>₹{price}</p>
