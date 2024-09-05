@@ -23,7 +23,7 @@ function ProductInfo() {
         setLoading(true)
         try {
             const productTemp = await getDoc(doc(fireDB, "products", params.id))
-            setProducts(productTemp.data());
+            setProducts({ ...productTemp.data(), id: params.id});
             setLoading(false)
         } catch (error) {
             console.log(error)

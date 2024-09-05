@@ -163,8 +163,8 @@ function Cart() {
                                     <img src={item.imageUrl} alt="product-image" className="w-full rounded-lg sm:w-40" onClick={() => window.location.href = `/productinfo/${item.id}`}/>
                                     <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
                                         <div className="mt-5 sm:mt-0" onClick={() => window.location.href = `/productinfo/${item.id}`}>
-                                            <h2 className="text-lg font-bold text-gray-900 w-72" style={{ color: mode === 'dark' ? 'white' : '' }}>{item.title}</h2>
-                                            <h2 className="text-sm text-gray-900 truncate w-72 my-2" style={{ color: mode === 'dark' ? 'white' : '' }}>{item.description}</h2>
+                                            <h2 className="text-lg font-bold text-gray-900 sm:w-72" style={{ color: mode === 'dark' ? 'white' : '' }}>{item.title}</h2>
+                                            <h2 className="text-sm text-gray-900 line-clamp-3 sm:w-72 my-2" style={{ color: mode === 'dark' ? 'white' : '' }}>{item.description}</h2>
                                             <p className="mt-1 text-lg font-semibold text-gray-700" style={{ color: mode === 'dark' ? 'white' : '' }}>₹{item.price}</p>
                                         </div>
                                         <div className="mt-4 flex justify-between sm:mt-0 sm:space-x-2">
