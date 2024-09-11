@@ -51,7 +51,7 @@ function Cart() {
                 dispatch(deleteFromCart(cartItem));
                 return
             }
-            temp = temp + parseInt(cartItem.price) * cartItemQuantity
+            temp = temp + parseInt(cartItem.price.replace(',', "")) * cartItemQuantity
         })
         if (temp > 0 && temp < 300){
             shipping = parseInt(100);
@@ -68,37 +68,34 @@ function Cart() {
     const [address, setAddress] = useState("");
     const [pincode, setPincode] = useState("")
     const [phoneNumber, setPhoneNumber] = useState("")
+    const [paymentMethod, setPaymentMethod] = useState("razorpay")
 
-    const buyNow = async () => {
-        // validation
-        if (name === "" || address == "" || pincode == "" || phoneNumber == "") {
-            return toast.error("All fields are required", {
-                position: "top-center",
-                autoClose: 1000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "colored",
-            })
-        }
-
-        const addressInfo = {
-            name,
-            address,
-            pincode,
-            phoneNumber,
+    const addPaymentData = (paymentId, addressInfo) => {
+        const orderInfo = {
+            cartItems,
+            addressInfo,
             date: new Date().toLocaleString(
                 "en-US",
                 {
-                  month: "short",
-                  day: "2-digit",
-                  year: "numeric",
+                    month: "short",
+                    day: "2-digit",
+                    year: "numeric",
                 }
-            )
+            ),
+            email: JSON.parse(localStorage.getItem("user")).user.email,
+            userid: JSON.parse(localStorage.getItem("user")).user.uid,
+            paymentMethod,
+            paymentId
         }
 
+        try {
+            const result = addDoc(collection(fireDB, "orders"), orderInfo)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const razorPay = async (addressInfo) => {
         var options = {
             key: import.meta.env.VITE_RAZORPAY_KEY,
             key_secret: import.meta.env.VITE_RAZORPAY_SECRET_KEY,
@@ -114,25 +111,9 @@ function Cart() {
 
                 const paymentId = response.razorpay_payment_id;
                 // store in firebase
-                const orderInfo = {
-                    cartItems,
-                    addressInfo,
-                    date: new Date().toLocaleString(
-                    "en-US",
-                    {
-                        month: "short",
-                        day: "2-digit",
-                        year: "numeric",
-                    }
-                    ),
-                    email: JSON.parse(localStorage.getItem("user")).user.email,
-                    userid: JSON.parse(localStorage.getItem("user")).user.uid,
-                    paymentId
-                }
-
-                try {
-                    const result = addDoc(collection(fireDB, "orders"), orderInfo)
-                } catch (error) {
+                try{
+                    addPaymentData(paymentId, addressInfo);
+                }catch (error) {
                     console.log(error)
                 }
 
@@ -148,6 +129,27 @@ function Cart() {
         };
         var pay = new window.Razorpay(options);
         pay.open();
+    }
+
+    const buyNow = async () => {
+        const addressInfo = {
+            name,
+            address,
+            pincode,
+            phoneNumber,
+            date: new Date().toLocaleString(
+                "en-US",
+                {
+                  month: "short",
+                  day: "2-digit",
+                  year: "numeric",
+                }
+            )
+        }
+
+        if (paymentMethod === 'razorpay'){
+            razorPay(addressInfo)
+        }
     };
 
     return (
@@ -206,6 +208,7 @@ function Cart() {
                         address={address}
                         pincode={pincode}
                         phoneNumber={phoneNumber}
+                        setPaymentMethod={setPaymentMethod}
                         setName={setName}
                         setAddress={setAddress}
                         setPincode={setPincode}
