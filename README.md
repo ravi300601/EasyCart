@@ -1,6 +1,6 @@
 # EasyCart - E-Commerce Web Application
 
-EasyCart is a full-fledged e-commerce web application built using modern web technologies like React, Vite, Tailwind CSS, and Firebase as the database. The platform offers a seamless shopping experience with features like product browsing, add to cart, order management, and an admin panel for managing products, orders, and users. It also integrates Razorpay for secure online payments.
+EasyCart is a full-fledged e-commerce web application built using modern web technologies like **React, Vite, Tailwind CSS, and Firebase** as the database. The platform offers a seamless shopping experience with features like product browsing, add to cart, order management, and an admin panel for managing products, orders, and users. It also integrates **Razorpay** for secure online payments.
 
 ## Features
 ### User Side:
