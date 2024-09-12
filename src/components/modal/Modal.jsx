@@ -3,16 +3,16 @@ import { Fragment, useState } from 'react'
 import { Page1, Page2 } from './ModelPage';
 import { toast } from 'react-toastify';
 
-export default function Modal({name, address, pincode, phoneNumber, setName, setAddress, setPincode, setPhoneNumber, buyNow, setPaymentMethod }) {
+export default function Modal({name, address, pincode, phoneNumber, setName, setAddress, setPincode, setPhoneNumber, buyNow, setPaymentMethod, paymentMethod, grandTotal }) {
     let [isOpen, setIsOpen] = useState(false)
     const [currentPage, setCurrentPage] = useState(1);
 
     function closeModal() {
-        setPaymentMethod('razorpay')
         setIsOpen(false)
     }
 
     function openModal() {
+        setPaymentMethod('razorpay')
         setIsOpen(true)
     }
 
@@ -98,6 +98,8 @@ export default function Modal({name, address, pincode, phoneNumber, setName, set
                                                 buyNow={buyNow}
                                                 closeModal={closeModal}
                                                 setPaymentMethod={setPaymentMethod}
+                                                grandTotal={grandTotal}
+                                                paymentMethod={paymentMethod}
                                                 />}
 
                                             </div>

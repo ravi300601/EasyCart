@@ -208,12 +208,14 @@ function Cart() {
                         address={address}
                         pincode={pincode}
                         phoneNumber={phoneNumber}
+                        paymentMethod={paymentMethod}
                         setPaymentMethod={setPaymentMethod}
                         setName={setName}
                         setAddress={setAddress}
                         setPincode={setPincode}
                         setPhoneNumber={setPhoneNumber}
                         buyNow={buyNow}
+                        grandTotal={grandTotal}
                         />
                     </div>
                 </div>

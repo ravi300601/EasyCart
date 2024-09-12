@@ -170,6 +170,9 @@ function DashboardTab() {
                                                 Email
                                             </th>
                                             <th scope="col" className="px-6 py-3">
+                                                Payment Method
+                                            </th>
+                                            <th scope="col" className="px-6 py-3">
                                                 Date
                                             </th>
                                         </tr>
@@ -210,6 +213,9 @@ function DashboardTab() {
                                                             </td>
                                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
                                                                 {allorder.email}
+                                                            </td>
+                                                            <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
+                                                                {allorder.paymentMethod}
                                                             </td>
                                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
                                                                 {allorder.date}
