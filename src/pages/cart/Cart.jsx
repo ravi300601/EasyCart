@@ -70,7 +70,7 @@ function Cart() {
     const [phoneNumber, setPhoneNumber] = useState("")
     const [paymentMethod, setPaymentMethod] = useState("razorpay")
 
-    const addPaymentData = (paymentId, addressInfo) => {
+    const addPaymentData = (paymentId, addressInfo, paymentAmount) => {
         const orderInfo = {
             cartItems,
             addressInfo,
@@ -85,7 +85,8 @@ function Cart() {
             email: JSON.parse(localStorage.getItem("user")).user.email,
             userid: JSON.parse(localStorage.getItem("user")).user.uid,
             paymentMethod,
-            paymentId
+            paymentId,
+            paymentAmount
         }
 
         try {
@@ -112,7 +113,7 @@ function Cart() {
                 const paymentId = response.razorpay_payment_id;
                 // store in firebase
                 try{
-                    addPaymentData(paymentId, addressInfo);
+                    addPaymentData(paymentId, addressInfo, parseInt(grandTotal));
                 }catch (error) {
                     console.log(error)
                 }

@@ -149,7 +149,7 @@ function DashboardTab() {
                                                 Title
                                             </th>
                                             <th scope="col" className="px-6 py-3">
-                                                Price
+                                                Payment Amount
                                             </th>
                                             <th scope="col" className="px-6 py-3">
                                                 Category
@@ -194,7 +194,7 @@ function DashboardTab() {
                                                                 {title}
                                                             </td>
                                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
-                                                                ₹{price}
+                                                                ₹{allorder.paymentAmount}
                                                             </td>
                                                             <td className="px-6 py-4 text-black " style={{ color: mode === 'dark' ? 'white' : '' }}>
                                                                 {category}
