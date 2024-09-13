@@ -1,4 +1,4 @@
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import { sendPasswordResetEmail, signInWithEmailAndPassword } from 'firebase/auth';
 import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify';
@@ -48,6 +48,24 @@ function Login() {
             setLoading(false);
         }
     }
+
+    const forgetPassword = async () => {
+        const email = prompt("Please enter your registered email address:");
+
+        if (email) {
+            try {
+                await sendPasswordResetEmail(auth, email);
+                alert("Password reset email sent. Please check your inbox.");
+            } catch (error) {
+                if (error.code === 'auth/invalid-email') {
+                    alert("No account found with this email address. Please try again.");
+                } else {
+                    console.error("Error sending password reset email:", error);
+                    alert("Failed to send password reset email. Please try again.");
+                }
+            }
+        }
+    }
    
     return (
         <div className="flex justify-center items-center h-screen bg-gradient-to-r from-blue-500 via-sky-600 to-purple-600">
@@ -82,7 +100,7 @@ function Login() {
                         <label htmlFor="remember">Remember me</label>
                     </div>
                     <div>
-                        <a href="#" className="text-yellow-500 font-bold hover:underline">Forgot Password?</a>
+                        <a href="#" onClick={forgetPassword} className="text-yellow-500 font-bold hover:underline">Forgot Password?</a>
                     </div>
                 </div>
                 <div className="flex justify-center mb-4">
