@@ -1,18 +1,27 @@
-import { Fragment, useContext, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { Link } from "react-router-dom";
+import { Fragment, useContext, useState } from "react";
 import { BsFillCloudSunFill } from "react-icons/bs";
 import { FiSun } from "react-icons/fi";
-import myContext from "../../context/data/myContext";
 import { RxCross2 } from "react-icons/rx";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import myContext from "../../context/data/myContext";
 import Dropdown from "../userProfile/userProfile";
 
 
 const mobileViewMenuItems = [
-    { label: "Home", href: "/" },
-    { label: "All Products", href: "/allproducts" },
-    { label: "WishList", href: "/wishlist" },
+    { 
+        label: "Home", 
+        href: "/" 
+    },
+    { 
+        label: "All Products",
+        href: "/allproducts" 
+    },
+    { 
+        label: "WishList", 
+        href: "/wishlist" 
+    },
     {
         label: "Profile",
         href: "#",
@@ -31,13 +40,7 @@ function Navbar() {
 
   const user = JSON.parse(localStorage.getItem("user"));
   const context = useContext(myContext);
-  const { toggleMode, mode, setLoading } = context;
-
-  const logout = () => {
-    localStorage.clear("user");
-    setLoading(false);
-    window.location.href = "/login";
-  };
+  const { toggleMode, mode } = context;
 
   const cartItems = useSelector((state) => state.cart);
 
@@ -143,7 +146,7 @@ function Navbar() {
                   {user ? (
                     <div className="text-gray-900 cursor-pointer">
                       <a
-                        onClick={logout}
+                        // onClick={logout}
                         style={{ color: mode === "dark" ? "white" : "" }}
                       >
                         Logout
@@ -280,7 +283,7 @@ function Navbar() {
 
                   {user ? (
                     <a
-                      onClick={logout}
+                    //   onClick={logout}
                       className="text-sm font-medium text-gray-700 cursor-pointer  "
                       style={{ color: mode === "dark" ? "white" : "" }}
                     >
