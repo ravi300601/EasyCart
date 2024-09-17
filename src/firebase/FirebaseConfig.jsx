@@ -9,11 +9,11 @@ const firebaseConfig = {
   projectId: "easy-cart-fdf5c",
   storageBucket: "easy-cart-fdf5c.appspot.com",
   messagingSenderId: import.meta.env.VITE_SENDER_ID,
-  appId: import.meta.env.VITE_APP_ID
+  appId: import.meta.env.VITE_APP_ID,
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const fireDB = getFirestore(app);
-const auth = getAuth(app)
-export {fireDB, auth}
+const auth = getAuth(app);
+export { fireDB, auth };

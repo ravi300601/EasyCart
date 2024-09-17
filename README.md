@@ -3,18 +3,22 @@
 EasyCart is a full-fledged e-commerce web application built using modern web technologies like **React, Vite, Tailwind CSS, and Firebase** as the database. The platform offers a seamless shopping experience with features like product browsing, add to cart, order management, and an admin panel for managing products, orders, and users. It also integrates **Razorpay** for secure online payments.
 
 ## Features
+
 ### User Side:
+
 - **Browse Products:** Users can explore products available on the platform.
 - **Add to Cart:** Allows users to add products to the cart for checkout.
 - **Place Orders:** Users can complete purchases and receive order confirmation.
 - **Online Payment:** Integrated with Razorpay to facilitate secure online payments.
 
 ### Admin Panel:
+
 - **Manage Products:** Admins can add, update, and delete products.
 - **Order Management:** Admins can view and manage customer orders.
 - **User Management:** Admins can manage registered users on the platform.
 
 ### Tech Stack
+
 - **Frontend:** React (built with Vite)
 - **Styling:** Tailwind CSS
 - **Backend:** Firebase (Firestore for database)
@@ -25,19 +29,23 @@ EasyCart is a full-fledged e-commerce web application built using modern web tec
 Follow these steps to set up Easy Cart locally:
 
 1. Clone the repository:
+
 ```
 git clone https://github.com/ravi300601/EasyCart.git
 ```
 
 2. Navigate to the project directory:
+
 ```
 cd EasyCart
 ```
 
 3. Install dependencies:
+
 ```
 pip install -r requirements.txt
 ```
+
 4. Create a .env file in the root of your project and add your Firebase and Razorpay configuration:
 
 ```
@@ -47,25 +55,30 @@ VITE_SENDER_ID=YOUR-SENDER-ID
 VITE_RAZORPAY_KEY=YOUR-RAZORPAY-KEY
 VITE_RAZORPAY_SECRET_KEY=YOUR-RAZORPAY-SECRET-KEY
 ```
+
 5. Start the development server:
 
 ```
 npm run dev
 ```
+
 6. Open your browser and go to http://localhost:5173 or given by server to see the application.
 
 ## Firebase Setup
+
 - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/).
 - Enable Firestore Database for real-time data storage.
 - Enable Firebase Authentication for user login and registration.
 - Set up Firebase Cloud Functions for backend processing (if required).
 
 ## Razorpay Integration
+
 - Create an account on [Razorpay](https://dashboard.razorpay.com/app/dashboard).
 - Generate your Razorpay API Key from the Razorpay dashboard.
 - Add your Razorpay key to the .env file as shown above.
 
 ## Folder Structure
+
 ```
 EasyCart/
 │
