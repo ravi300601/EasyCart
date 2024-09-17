@@ -7,7 +7,7 @@ const menuOptions = [
   },
   {
     label: "Orders",
-    href: "#",
+    href: "/order",
   },
   {
     label: "Wishlist",
