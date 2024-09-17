@@ -6,6 +6,7 @@ import { FiSun } from 'react-icons/fi'
 import myContext from '../../context/data/myContext'
 import { RxCross2 } from 'react-icons/rx'
 import { useSelector } from 'react-redux'
+import Dropdown from '../userProfile/userProfile'
 
 function Navbar() {
   const [open, setOpen] = useState(false)
@@ -89,6 +90,7 @@ function Navbar() {
                     </a>
                   </div> : ""}
                   <div className="flow-root">
+                    {/* Dropdown here */}
                     <Link to={'/'} className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer">
                       <img
                         className="inline-block w-10 h-10 rounded-full"
@@ -181,12 +183,7 @@ function Navbar() {
                   </a>
                 </div>
                 <div className="hidden lg:ml-8 lg:flex">
-                  <a href="#" className="flex items-center text-gray-700 ">
-                    <img
-                      className="inline-block w-10 h-10 rounded-full"
-                      src="https://cdn-icons-png.flaticon.com/256/3135/3135715.png"
-                      alt="Dan_Abromov" />
-                  </a>
+                  <Dropdown />
                 </div>
 
                 {/* Search */}
