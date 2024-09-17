@@ -28,19 +28,19 @@ function Wishlist() {
           <thead className="border-b-2 border-black">
             <tr className="">
               <th className="py-3 text-left">Product</th>
-              <th className="py-3 hidden md:table-cell"></th>
+              <th className="py-3 md:table-cell"></th>
             </tr>
           </thead>
           <tbody>
             {wishListItems?.map((item) => (
               <>
-                <tr className="hidden md:table-row">
+                <tr className="md:table-row">
                   <td className="w-4/5 border hover:bg-slate-300/20">
-                    <div className="flex items-center gap-x-10 w-full p-2">
+                    <div className="md:flex block items-center gap-x-10 w-full p-2">
                       <Link to={"/productInfo/" + item.id}>
                         <img
                           src={item?.imageUrl}
-                          className="w-36 object-cover hover:opacity-80"
+                          className="w-36 object-cover hover:opacity-80 md:mx-0 mx-auto"
                           alt="404 not found"
                         />
                       </Link>

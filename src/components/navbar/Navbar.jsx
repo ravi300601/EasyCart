@@ -8,6 +8,24 @@ import { RxCross2 } from "react-icons/rx";
 import { useSelector } from "react-redux";
 import Dropdown from "../userProfile/userProfile";
 
+
+const mobileViewMenuItems = [
+    { label: "Home", href: "/" },
+    { label: "All Products", href: "/allproducts" },
+    { label: "WishList", href: "/wishlist" },
+    {
+        label: "Profile",
+        href: "#",
+    },
+    {
+    label: "Settings",
+    href: "#",
+    },
+    {
+    label: "Help",
+    href: "#",
+    },
+]
 function Navbar() {
   const [open, setOpen] = useState(false);
 
@@ -67,11 +85,10 @@ function Navbar() {
                     <RxCross2 />
                   </button>
                 </div>
-                <div className="space-y-6 border-t border-gray-200 px-4 py-6">
-                  <div className="flow-root">
+                <div className="space-y-2 border-t border-gray-200 px-4 py-6 font-medium">
+                  <div className="text-gray-900 cursor-pointer">
                     <Link
                       to={"/"}
-                      className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
                     >
                       <img
                         className="inline-block w-10 h-10 rounded-full"
@@ -80,17 +97,20 @@ function Navbar() {
                       />
                     </Link>
                   </div>
-                  <div className="">
-                    <Link
-                      to={"/allproducts"}
-                      className="text-sm font-medium text-gray-900 "
-                      style={{ color: mode === "dark" ? "white" : "" }}
-                    >
-                      All Products
-                    </Link>
-                  </div>
+                  {
+                    mobileViewMenuItems.map((item) => (
+                      <div key={item.label} className="text-gray-900">
+                        <Link
+                          to={item.href}
+                          style={{ color: mode === "dark" ? "white" : "" }}
+                        >
+                          {item.label}
+                        </Link>
+                      </div>
+                    ))
+                  }
                   {user ? (
-                    <div className="-m-2 block p-2 font-medium text-gray-900">
+                    <div className="text-gray-900">
                       <Link
                         to={"/order"}
                         style={{ color: mode === "dark" ? "white" : "" }}
@@ -99,7 +119,7 @@ function Navbar() {
                       </Link>
                     </div>
                   ) : (
-                    <div className="-m-2 block p-2 font-medium text-gray-900">
+                    <div className="text-gray-900">
                       <Link
                         to={"/login"}
                         style={{ color: mode === "dark" ? "white" : "" }}
@@ -109,10 +129,9 @@ function Navbar() {
                     </div>
                   )}
                   {user?.user?.email === "admin@gmail.com" ? (
-                    <div className="flow-root">
+                    <div className="text-gray-900">
                       <Link
                         to={"/dashboard"}
-                        className="-m-2 block p-2 font-medium text-gray-900"
                         style={{ color: mode === "dark" ? "white" : "" }}
                       >
                         admin
@@ -122,10 +141,9 @@ function Navbar() {
                     ""
                   )}
                   {user ? (
-                    <div className="flow-root">
+                    <div className="text-gray-900 cursor-pointer">
                       <a
                         onClick={logout}
-                        className="-m-2 block p-2 font-medium text-gray-900 cursor-pointer"
                         style={{ color: mode === "dark" ? "white" : "" }}
                       >
                         Logout
