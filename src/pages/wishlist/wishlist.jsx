@@ -1,14 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Layout from "../../components/layout/Layout";
 import Loader from "../../components/loader/Loader";
 import { Link } from "react-router-dom";
 import { ZmdiDelete } from "../../components/icons/icon";
+import myContext from "../../context/data/myContext";
 
 function Wishlist() {
   const [loading, setLoading] = useState(true);
   const [wishListItems, setWishListItems] = useState(() => {
     return JSON.parse(localStorage.getItem("wishlist")) || [];
   });
+  const context = useContext(myContext);
+  const { mode } = context;
 
   const handleRemoveFromWishlist = (item) => {
     const updatedWishListItems = wishListItems.filter(
@@ -25,7 +28,10 @@ function Wishlist() {
       {loading && <Loader />}
       <div className="w-4/5 mx-auto my-5">
         <table className="w-full">
-          <thead className="border-b-2 border-black">
+          <thead
+            className=""
+            style={{ border: mode === "dark" ? "white" : "", color: mode === "dark" ? "white" : "" }}
+          >
             <tr className="">
               <th className="py-3 text-left">Product</th>
               <th className="py-3 md:table-cell"></th>
@@ -44,19 +50,27 @@ function Wishlist() {
                           alt="404 not found"
                         />
                       </Link>
-                      <div className="font-bold">
+                      <div>
                         <Link to={"/productInfo/" + item.id}>
-                          <p className="text-gray-900 hover:text-[#5e3fde]">
+                          <p 
+                            className="text-gray-900 hover:text-slate-300"
+                            style={{ color: mode === "dark" ? "white" : "" }}
+                          >
                             {item?.title}
                           </p>
                         </Link>
-                        <p className="text-gray-900">RS. {item.price}</p>
+                        <p 
+                          className="text-gray-900"
+                          style={{ color: mode === "dark" ? "white" : "" }}
+                        >
+                          RS. {item.price}
+                        </p>
                       </div>
                     </div>
                   </td>
                   <td className="p-5 border text-center hover:bg-slate-300/20">
                     <button onClick={() => handleRemoveFromWishlist(item)}>
-                      <ZmdiDelete />
+                      <ZmdiDelete className="dark:text-red-400" />
                     </button>
                   </td>
                 </tr>
@@ -65,7 +79,7 @@ function Wishlist() {
 
             {!wishListItems?.length && (
               <tr>
-                <td>No Items here..</td>
+                <td>You haven't added any items to your wishlist. Discover something special today!</td>
               </tr>
             )}
           </tbody>
