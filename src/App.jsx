@@ -20,6 +20,7 @@ import UpdateProduct from './pages/admin/page/UpdateProduct';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import AllProducts from './pages/allproducts/AllProducts';
+import Wishlist from './pages/wishlist/wishlist';
 
 function App() {
 	return (
@@ -33,6 +34,7 @@ function App() {
 						</ProtectedRoute>
 					} />
 					<Route path="/cart" element={<Cart/>} />
+					<Route path="/wishlist" element={<Wishlist />} />
 					<Route path="/dashboard" element={
 						<ProtectedRouteForAdmin>
 							<Dashboard/>

@@ -1,23 +1,30 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Layout from '../../components/layout/Layout'
-import myContext from '../../context/data/myContext';
-import { useParams } from 'react-router';
-import { useDispatch, useSelector } from 'react-redux';
 import { doc, getDoc } from 'firebase/firestore';
+import { useContext, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 import { toast } from 'react-toastify';
-import { addToCart, deleteFromCart } from '../../redux/cartSlice';
+
+import myContext from '../../context/data/myContext';
 import { fireDB } from '../../firebase/FirebaseConfig';
+import { addToCart, deleteFromCart } from '../../redux/cartSlice';
+
+
+import { BytesizeHeart, IlHeart } from '../../components/icons/icon';
+import Layout from '../../components/layout/Layout';
 import Loader from '../../components/loader/Loader';
 
 function ProductInfo() {
-    const context = useContext(myContext);
-    const { mode, loading, setLoading, cartQuantity, setCartQuantity } = context;
-
-    const [products, setProducts] = useState('')
     const params = useParams()
-
+    const [isInWishList, setIsInWishList] = useState(false);
+    const [wishlistItems, setWishlistItems] = useState(() => {
+        return JSON.parse(localStorage.getItem('wishlist')) || [];
+    });
+    const [products, setProducts] = useState('')
     const dispatch = useDispatch()
-    const cartItems = useSelector((state) => state.cart)
+    const cartItems = useSelector((state) => state.cart);
+    const context = useContext(myContext);
+
+    const { mode, loading, setLoading, cartQuantity, setCartQuantity } = context;
 
     const getProductData = async () => {
         setLoading(true)
@@ -46,10 +53,6 @@ function ProductInfo() {
         return cartItem ? cartItem.quantity : 0;
     };
 
-    useEffect(() => {
-        getProductData()
-    }, [])
-
     // add to cart
     const addCart = (product) => {
         const existingProduct = cartQuantity.find(item => item.id === product.id);
@@ -68,6 +71,26 @@ function ProductInfo() {
         toast.success('Product added to Cart');
     }
 
+    // add to wishlist
+    const handleOnClickWishlist = () => {
+        if (!isInWishList) {
+            wishlistItems.push(products);
+            setWishlistItems([...wishlistItems]);
+            localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
+        }
+        setIsInWishList(true);
+    };
+    // remove from wishlist
+    const handleOnClickRemoveWishList = () => {
+        wishlistItems.splice(wishlistItems.findIndex((item) => item.id === products.id), 1);
+        localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
+        setIsInWishList(false);
+    };
+
+    useEffect(() => {
+        getProductData()
+    }, [])
+
     useEffect(() => {
         cartItems.forEach((cartItem) => {
             const cartItemQuantity = getItemQuantity(cartItem);
@@ -79,6 +102,11 @@ function ProductInfo() {
         localStorage.setItem('cart', JSON.stringify(cartItems));
         localStorage.setItem('cartQuantity', JSON.stringify(cartQuantity));
     }, [cartItems, cartQuantity])
+
+    useEffect(() =>{
+        localStorage.setItem('wishlist', JSON.stringify(wishlistItems));
+        setIsInWishList(wishlistItems.some((item) => item.id === products.id));
+    })
 
     return (
         <Layout>
@@ -213,18 +241,23 @@ function ProductInfo() {
                                     <button className="bg-gray-300 text-gray-800 font-bold py-2 px-6 text-xs">{getItemQuantity(products)}</button>
                                     <button onClick={() => addQuantity(products, false)} className="bg-gray-500 text-white font-bold py-2 px-6 rounded-r-lg text-xs">-</button>
                                 </>)}
-                                <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
-                                    <svg
-                                        fill="currentColor"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        className="w-5 h-5"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z" />
-                                    </svg>
-                                </button>
+                                {
+                                    isInWishList ? (
+                                        <button 
+                                            className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"
+                                            onClick={handleOnClickRemoveWishList}
+                                        >
+                                            <IlHeart />
+                                        </button>
+                                    ): (
+                                        <button 
+                                            className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4"
+                                            onClick={handleOnClickWishlist}
+                                        >
+                                            <BytesizeHeart />
+                                        </button>
+                                    )
+                                }
                             </div>
                         </div>
                     </div>}
