@@ -8,33 +8,32 @@ import { Link, useNavigate } from "react-router-dom";
 import myContext from "../../context/data/myContext";
 import Dropdown from "../userProfile/userProfile";
 
-
 const mobileViewMenuItems = [
-    { 
-        label: "Home", 
-        href: "/" 
-    },
-    { 
-        label: "All Products",
-        href: "/allproducts" 
-    },
-    { 
-        label: "WishList", 
-        href: "/wishlist" 
-    },
-    {
-        label: "Profile",
-        href: "#",
-    },
-    {
+  {
+    label: "Home",
+    href: "/",
+  },
+  {
+    label: "All Products",
+    href: "/allproducts",
+  },
+  {
+    label: "WishList",
+    href: "/wishlist",
+  },
+  {
+    label: "Profile",
+    href: "#",
+  },
+  {
     label: "Settings",
     href: "#",
-    },
-    {
+  },
+  {
     label: "Help",
     href: "#",
-    },
-]
+  },
+];
 function Navbar() {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -49,7 +48,6 @@ function Navbar() {
     setLoading(false);
     navigate("/login");
   };
-
 
   return (
     <div className="bg-white sticky top-0 z-50">
@@ -97,9 +95,7 @@ function Navbar() {
                 </div>
                 <div className="space-y-2 border-t border-gray-200 px-4 py-6 font-medium">
                   <div className="text-gray-900 cursor-pointer">
-                    <Link
-                      to={"/"}
-                    >
+                    <Link to={"/"}>
                       <img
                         className="inline-block w-10 h-10 rounded-full"
                         src="https://cdn-icons-png.flaticon.com/256/3135/3135715.png"
@@ -107,18 +103,16 @@ function Navbar() {
                       />
                     </Link>
                   </div>
-                  {
-                    mobileViewMenuItems.map((item) => (
-                      <div key={item.label} className="text-gray-900">
-                        <Link
-                          to={item.href}
-                          style={{ color: mode === "dark" ? "white" : "" }}
-                        >
-                          {item.label}
-                        </Link>
-                      </div>
-                    ))
-                  }
+                  {mobileViewMenuItems.map((item) => (
+                    <div key={item.label} className="text-gray-900">
+                      <Link
+                        to={item.href}
+                        style={{ color: mode === "dark" ? "white" : "" }}
+                      >
+                        {item.label}
+                      </Link>
+                    </div>
+                  ))}
                   {user ? (
                     <div className="text-gray-900">
                       <Link
@@ -222,13 +216,13 @@ function Navbar() {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   stroke="currentColor"
-                  class="w-6 h-6"
+                  className="w-6 h-6"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
                   />
                 </svg>
