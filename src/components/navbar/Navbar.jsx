@@ -4,7 +4,7 @@ import { BsFillCloudSunFill } from "react-icons/bs";
 import { FiSun } from "react-icons/fi";
 import { RxCross2 } from "react-icons/rx";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import myContext from "../../context/data/myContext";
 import Dropdown from "../userProfile/userProfile";
 
@@ -37,12 +37,19 @@ const mobileViewMenuItems = [
 ]
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const context = useContext(myContext);
+  const cartItems = useSelector((state) => state.cart);
 
   const user = JSON.parse(localStorage.getItem("user"));
-  const context = useContext(myContext);
-  const { toggleMode, mode } = context;
+  const { toggleMode, mode, setLoading } = context;
 
-  const cartItems = useSelector((state) => state.cart);
+  const handleSignout = () => {
+    localStorage.clear("user");
+    setLoading(false);
+    navigate("/login");
+  };
+
 
   return (
     <div className="bg-white sticky top-0 z-50">
@@ -146,7 +153,7 @@ function Navbar() {
                   {user ? (
                     <div className="text-gray-900 cursor-pointer">
                       <a
-                        // onClick={logout}
+                        onClick={handleSignout}
                         style={{ color: mode === "dark" ? "white" : "" }}
                       >
                         Logout
@@ -277,18 +284,6 @@ function Navbar() {
                     >
                       Admin
                     </Link>
-                  ) : (
-                    ""
-                  )}
-
-                  {user ? (
-                    <a
-                    //   onClick={logout}
-                      className="text-sm font-medium text-gray-700 cursor-pointer  "
-                      style={{ color: mode === "dark" ? "white" : "" }}
-                    >
-                      Logout
-                    </a>
                   ) : (
                     ""
                   )}

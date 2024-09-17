@@ -1,6 +1,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { useContext } from "react";
 import myContext from "../../context/data/myContext";
+import { useNavigate } from "react-router-dom";
 
 const menuOptions = [
   {
@@ -26,12 +27,13 @@ const menuOptions = [
 ];
 export default function Dropdown() {
   const context = useContext(myContext);
+  const navigate = useNavigate();
   const { setLoading, mode } = context;
 
   const handleSignout = () => {
     localStorage.clear("user");
     setLoading(false);
-    window.location.href = "/login";
+    navigate("/login");
   };
 
   return (
@@ -65,17 +67,15 @@ export default function Dropdown() {
               </a>
             </MenuItem>
           ))}
-          <form action={handleSignout}>
-            <MenuItem>
-              <button
-                type="submit"
-                className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-[focus]:bg-gray-100/10 data-[focus]:text-gray-900"
-                style={{ color: mode === "dark" ? "white" : "" }}
-              >
-                Sign out
-              </button>
-            </MenuItem>
-          </form>
+          <MenuItem>
+            <button
+              onClick={handleSignout}
+              className="block w-full px-4 py-2 text-left text-sm text-gray-700 data-[focus]:bg-gray-100/10 data-[focus]:text-gray-900"
+              style={{ color: mode === "dark" ? "white" : "" }}
+            >
+              Sign out
+            </button>
+          </MenuItem>
         </div>
       </MenuItems>
     </Menu>
