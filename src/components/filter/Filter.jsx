@@ -72,7 +72,11 @@ function Filter() {
                 <option value="">Select Category</option>
                 {[...new Set(product.map((item) => item.category))].map(
                   (category, index) => {
-                    return <option value={category}>{category}</option>;
+                    return (
+                      <option key={index} value={category}>
+                        {category}
+                      </option>
+                    );
                   },
                 )}
               </select>

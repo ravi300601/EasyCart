@@ -19,15 +19,15 @@ function Order() {
               .map((order) => {
                 return (
                   <>
-                    <div class="inline-flex items-center justify-center w-full">
+                    <div className="inline-flex items-center justify-center w-full">
                       <hr
-                        class="w-2/4 h-px bg-gray-200 border-0 dark:bg-gray-700"
+                        className="w-2/4 h-px bg-gray-200 border-0 dark:bg-gray-700"
                         style={{
                           backgroundColor: mode === "dark" ? "#9ca3af" : "",
                         }}
                       />
                       <span
-                        class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2"
+                        className="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2"
                         style={{
                           backgroundColor:
                             mode === "dark" ? "rgb(17, 24, 39)" : "",

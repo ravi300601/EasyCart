@@ -30,7 +30,10 @@ function Wishlist() {
         <table className="w-full">
           <thead
             className=""
-            style={{ border: mode === "dark" ? "white" : "", color: mode === "dark" ? "white" : "" }}
+            style={{
+              border: mode === "dark" ? "white" : "",
+              color: mode === "dark" ? "white" : "",
+            }}
           >
             <tr className="">
               <th className="py-3 text-left">Product</th>
@@ -52,14 +55,14 @@ function Wishlist() {
                       </Link>
                       <div>
                         <Link to={"/productInfo/" + item.id}>
-                          <p 
+                          <p
                             className="text-gray-900 hover:text-slate-300"
                             style={{ color: mode === "dark" ? "white" : "" }}
                           >
                             {item?.title}
                           </p>
                         </Link>
-                        <p 
+                        <p
                           className="text-gray-900"
                           style={{ color: mode === "dark" ? "white" : "" }}
                         >
@@ -79,7 +82,10 @@ function Wishlist() {
 
             {!wishListItems?.length && (
               <tr>
-                <td>You haven't added any items to your wishlist. Discover something special today!</td>
+                <td>
+                  You haven't added any items to your wishlist. Discover
+                  something special today!
+                </td>
               </tr>
             )}
           </tbody>
