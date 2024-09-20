@@ -56,7 +56,7 @@ function Cart() {
         return;
       }
       temp =
-        temp + parseInt(cartItem.price.replace(",", "")) * cartItemQuantity;
+        temp + parseInt(cartItem.price.replace(/,/g, "")) * cartItemQuantity;
     });
     if (temp > 0 && temp < 300) {
       shipping = parseInt(100);

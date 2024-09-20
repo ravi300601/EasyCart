@@ -14,6 +14,12 @@ function Filter() {
     product,
   } = context;
 
+  function resetFilter() {
+    setSearchkey('')
+    setFilterPrice('')
+    setFilterType('')
+  }
+
   return (
     <div>
       <div className=" container mx-auto px-4 mt-5 ">
@@ -51,10 +57,9 @@ function Filter() {
           </div>
           <div className="flex items-center justify-between mt-4">
             <p className="font-medium">Filters</p>
-            <button
+            <button onClick={resetFilter}
               className="px-4 py-2 bg-gray-50hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md"
-              style={{ color: mode === "dark" ? "white" : "" }}
-            >
+              style={{ color: mode === "dark" ? "white" : "" }}>
               Reset Filter
             </button>
           </div>
@@ -89,16 +94,13 @@ function Filter() {
                   color: mode === "dark" ? "white" : "",
                 }}
               >
-                <option value="">Select Price</option>
-                {[...new Set(product.map((item) => item.price))].map(
-                  (price, index) => {
-                    return (
-                      <option key={index} value={price}>
-                        {price}
-                      </option>
-                    );
-                  },
-                )}
+                <option value="">Select Price Range</option>
+                <option value="[0,1000]">0-1000</option>
+                <option value="[1000,5000]">1000-5000</option>
+                <option value="[5000,10000]">5000-10000</option>
+                <option value="[10000,20000]">10000-20000</option>
+                <option value="[20000,50000]">20000-50000</option>
+                <option value="[50000,100000]">50000-100000</option>
               </select>
             </div>
           </div>

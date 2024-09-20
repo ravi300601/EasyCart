@@ -92,8 +92,18 @@ function ProductCard() {
             .filter((obj) =>
               obj.category.toLowerCase().includes(filterType.toLowerCase()),
             )
-            .filter((obj) => obj.price.includes(filterPrice))
-            .slice(0, 8)
+            .filter((obj) => {
+                if (filterPrice){
+                    const priceNumber = parseInt(obj.price.replace(/,/g, ""));
+                    // Extract minimum and maximum prices from filterPrice string
+                    const priceRange = filterPrice.slice(1, -1).split(","); // Remove brackets
+                    const minPrice = parseFloat(priceRange[0]);
+                    const maxPrice = parseFloat(priceRange[1]);
+
+                    return priceNumber >= minPrice && priceNumber <= maxPrice;
+                }
+				return true
+			}).slice(0, 8)
             .map((item, index) => {
               const { title, price, description, imageUrl, id } = item;
               const quantityInCart = getItemQuantity(item);
