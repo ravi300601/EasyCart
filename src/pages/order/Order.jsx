@@ -47,7 +47,7 @@ function Order() {
                             }
                           >
                             <div
-                              className="justify-between mb-2 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start sm:h-auto"
+                              className="justify-between mb-2 rounded-lg bg-gray-100 p-6 shadow-md sm:flex sm:justify-start sm:h-auto"
                               style={{
                                 backgroundColor:
                                   mode === "dark" ? "#282c34" : "",
