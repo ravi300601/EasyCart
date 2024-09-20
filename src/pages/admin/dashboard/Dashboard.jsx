@@ -17,7 +17,7 @@ function Dashboard() {
           <div className="flex flex-wrap -m-4 text-center">
             <div className="p-4 md:w-1/4 sm:w-1/2 w-full">
               <div
-                className=" border-2 hover:shadow-blue-600 shadow-[inset_0_0_10px_rgba(0,0,0,0.6)] bg-gray-100 border-gray-300 px-4 py-3 rounded-xl"
+                className="border-2 hover:bg-blue-100 hover:border-blue-300 bg-gray-100 border-gray-300 px-4 py-3 rounded-xl"
                 style={{
                   backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "",
                   color: mode === "dark" ? "white" : "",
@@ -45,7 +45,7 @@ function Dashboard() {
             </div>
             <div className="p-4 md:w-1/4 sm:w-1/2 w-full">
               <div
-                className=" border-2 hover:shadow-blue-600 shadow-[inset_0_0_10px_rgba(0,0,0,0.6)] bg-gray-100 border-gray-300 px-4 py-3 rounded-xl"
+                className="border-2 hover:bg-blue-100 hover:border-blue-300 bg-gray-100 border-gray-300 px-4 py-3 rounded-xl"
                 style={{
                   backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "",
                   color: mode === "dark" ? "white" : "",
@@ -73,7 +73,7 @@ function Dashboard() {
             </div>
             <div className="p-4 md:w-1/4 sm:w-1/2 w-full">
               <div
-                className=" border-2 hover:shadow-blue-600 shadow-[inset_0_0_10px_rgba(0,0,0,0.6)] bg-gray-100 border-gray-300 px-4 py-3 rounded-xl"
+                className="border-2 hover:bg-blue-100 hover:border-blue-300 bg-gray-100 border-gray-300 px-4 py-3 rounded-xl"
                 style={{
                   backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "",
                   color: mode === "dark" ? "white" : "",
@@ -101,7 +101,7 @@ function Dashboard() {
             </div>
             <div className="p-4 md:w-1/4 sm:w-1/2 w-full">
               <div
-                className=" border-2 hover:shadow-blue-600 shadow-[inset_0_0_10px_rgba(0,0,0,0.6)] bg-gray-100 border-gray-300 px-4 py-3 rounded-xl"
+                className="border-2 hover:bg-blue-100 hover:border-blue-300 bg-gray-100 border-gray-300 px-4 py-3 rounded-xl"
                 style={{
                   backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "",
                   color: mode === "dark" ? "white" : "",

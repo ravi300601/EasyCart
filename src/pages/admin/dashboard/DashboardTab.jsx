@@ -21,9 +21,8 @@ function DashboardTab() {
             <TabList className="md:flex md:space-x-8 bg-grid grid-cols-2 text-center gap-4 md:justify-center mb-10 ">
               <Tab>
                 <button
-                  type="button"
-                  className="font-medium border-b-2 hover:shadow-sky-700 border-sky-500 text-sky-500 rounded-lg text-xl shadow-[inset_0_0_8px_rgba(0,0,0,0.6)] px-5 py-1.5 text-center bg-[#605d5d12] "
-                >
+                  type="button" style={{backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "", color: mode === "dark" ? "white" : ""}}
+                  className="font-medium border-b-2 border-sky-500 hover:border-slate-50 bg-gray-100 text-sky-500  hover:bg-blue-400 hover:text-blue-50 rounded-lg text-xl px-5 py-1.5 text-center">
                   <div className="flex gap-2 items-center">
                     <MdOutlineProductionQuantityLimits />
                     Products
@@ -32,9 +31,8 @@ function DashboardTab() {
               </Tab>
               <Tab>
                 <button
-                  type="button"
-                  className="font-medium border-b-2 border-sky-500 bg-[#605d5d12] text-sky-500  hover:shadow-sky-700  rounded-lg text-xl shadow-[inset_0_0_8px_rgba(0,0,0,0.6)]    px-5 py-1.5 text-center "
-                >
+                  type="button" style={{backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "", color: mode === "dark" ? "white" : ""}}
+                  className="font-medium border-b-2 border-sky-500 hover:border-slate-50 bg-gray-100 text-sky-500  hover:bg-blue-400 hover:text-blue-50 rounded-lg text-xl px-5 py-1.5 text-center">
                   <div className="flex gap-2 items-center">
                     <AiFillShopping /> Order
                   </div>
@@ -42,9 +40,8 @@ function DashboardTab() {
               </Tab>
               <Tab>
                 <button
-                  type="button"
-                  className="font-medium border-b-2 border-sky-500 bg-[#605d5d12] text-sky-500 rounded-lg text-xl  hover:shadow-sky-700 shadow-[inset_0_0_8px_rgba(0,0,0,0.6)]   px-5 py-1.5 text-center "
-                >
+                  type="button" style={{backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "", color: mode === "dark" ? "white" : ""}}
+                  className="font-medium border-b-2 border-sky-500 hover:border-slate-50 bg-gray-100 text-sky-500  hover:bg-blue-400 hover:text-blue-50 rounded-lg text-xl px-5 py-1.5 text-center">
                   <div className="flex gap-2 items-center">
                     <FaUser /> Users
                   </div>
@@ -120,17 +117,10 @@ function DashboardTab() {
                       return (
                         <tbody className="">
                           <tr
-                            className="bg-gray-50 border-b  dark:border-gray-700"
-                            style={{
-                              backgroundColor:
-                                mode === "dark" ? "rgb(46 49 55)" : "",
-                              color: mode === "dark" ? "white" : "",
-                            }}
-                          >
+                            className="bg-gray-50 border-b hover:bg-blue-100 border-gray-700"
+                            style={{backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "", color: mode === "dark" ? "white" : ""}}>
                             <td
-                              className="px-6 py-4 text-black "
-                              style={{ color: mode === "dark" ? "white" : "" }}
-                            >
+                              className="px-6 py-4 text-black" style={{ color: mode === "dark" ? "white" : "" }} >
                               {index + 1}
                             </td>
                             <th
@@ -288,7 +278,7 @@ function DashboardTab() {
                           return (
                             <tbody>
                               <tr
-                                className="bg-gray-50 border-b  dark:border-gray-700"
+                                className="bg-gray-50 border-b border-gray-700 hover:bg-blue-100"
                                 style={{
                                   backgroundColor:
                                     mode === "dark" ? "rgb(46 49 55)" : "",
@@ -444,7 +434,7 @@ function DashboardTab() {
                     return (
                       <tbody>
                         <tr
-                          className="bg-gray-50 border-b  dark:border-gray-700"
+                          className="bg-gray-50 border-b border-gray-700 hover:bg-blue-100"
                           style={{
                             backgroundColor:
                               mode === "dark" ? "rgb(46 49 55)" : "",
