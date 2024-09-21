@@ -2,6 +2,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { Page1, Page2 } from "./ModelPage";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function Modal({
   name,
@@ -19,14 +20,19 @@ export default function Modal({
 }) {
   let [isOpen, setIsOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const navigate = useNavigate();
 
   function closeModal() {
     setIsOpen(false);
   }
 
   function openModal() {
-    setPaymentMethod("razorpay");
-    setIsOpen(true);
+    if(JSON.parse(localStorage.getItem("user"))){
+      setPaymentMethod("razorpay");
+      setIsOpen(true);
+    }else{
+      navigate('/login')
+    }
   }
 
   const handleNextPage = () => {
@@ -53,13 +59,23 @@ export default function Modal({
   return (
     <>
       <div className="text-center rounded-lg text-white font-bold">
-        <button
-          type="button"
-          onClick={openModal}
-          className="w-full bg-indigo-600 py-2 text-center rounded-lg text-white font-bold"
-        >
-          Buy Now
-        </button>
+        {grandTotal != 0 && (
+          <button
+            type="button"
+            onClick={openModal}
+            className="w-full bg-indigo-600 py-2 text-center rounded-lg text-white font-bold"
+          >
+            Buy Now
+          </button>
+        )}
+        {grandTotal === 0 && (
+          <button
+            type="button"
+            className="w-full bg-indigo-600 py-2 text-center rounded-lg text-white font-bold opacity-60"
+          >
+            Buy Now
+          </button>
+        )}
       </div>
 
       <Transition appear show={isOpen} as={Fragment}>

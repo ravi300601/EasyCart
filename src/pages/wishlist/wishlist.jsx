@@ -45,30 +45,20 @@ function Wishlist() {
 						<>
 							<tr className="md:table-row">
 							<td className="w-4/5 border hover:bg-slate-300/20">
-								<div className="md:flex block items-center gap-x-10 w-full p-2">
-								<Link to={"/productInfo/" + item.id}>
-									<img
-									src={item?.imageUrl}
+								<div className="md:flex block items-center gap-x-10 w-full p-2" onClick={() =>(window.location.href = `/productinfo/${item.id}`)}>
+									<img src={item?.imageUrl}
 									className="w-36 object-cover hover:opacity-80 md:mx-0 mx-auto"
-									alt="404 not found"
-									/>
-								</Link>
-								<div>
-									<Link to={"/productInfo/" + item.id}>
-									<p
-										className="text-gray-900 hover:text-slate-300"
-										style={{ color: mode === "dark" ? "white" : "" }}
-									>
-										{item?.title}
-									</p>
-									</Link>
-									<p
-									className="text-gray-900"
-									style={{ color: mode === "dark" ? "white" : "" }}
-									>
-									RS. {item.price}
-									</p>
-								</div>
+									alt="404 not found"/>
+									<div>
+										<p className="text-gray-900"
+											style={{ color: mode === "dark" ? "white" : "" }}>
+											{item?.title}
+										</p>
+										<p className="text-gray-900"
+										style={{ color: mode === "dark" ? "white" : "" }}>
+										RS. {item.price}
+										</p>
+									</div>
 								</div>
 							</td>
 							<td className="p-5 border text-center hover:bg-slate-300/20">
@@ -81,7 +71,10 @@ function Wishlist() {
 						))}
 
 						{!wishListItems?.length && (
-						<tr>
+						<tr className="text-center bg-gray-100 h-20" style={{
+							backgroundColor: mode === "dark" ? "#282c34" : "",
+							color: mode === "dark" ? "white" : "",
+						  }}>
 							<td style={{color: mode === "dark" ? "white" : ""}}>
 							You haven't added any items to your wishlist. Discover
 							something special today!

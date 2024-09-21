@@ -73,7 +73,7 @@ function DashboardTab() {
                   </button>
                 </div>
                 <div className="relative overflow-x-auto rounded-lg">
-                  <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                  <table className="w-full text-sm text-left text-gray-500">
                     <thead
                       className="text-xs text-black uppercase bg-gray-200 "
                       style={{
@@ -117,7 +117,7 @@ function DashboardTab() {
                       return (
                         <tbody className="">
                           <tr
-                            className="bg-gray-50 border-b hover:bg-blue-100 border-gray-700"
+                            className="bg-gray-50 border-b hover:bg-slate-100 border-gray-700"
                             style={{backgroundColor: mode === "dark" ? "rgb(46 49 55)" : "", color: mode === "dark" ? "white" : ""}}>
                             <td
                               className="px-6 py-4 text-black" style={{ color: mode === "dark" ? "white" : "" }} >
@@ -278,7 +278,7 @@ function DashboardTab() {
                           return (
                             <tbody>
                               <tr
-                                className="bg-gray-50 border-b border-gray-700 hover:bg-blue-100"
+                                className="bg-gray-50 border-b border-gray-700 hover:bg-slate-100"
                                 style={{
                                   backgroundColor:
                                     mode === "dark" ? "rgb(46 49 55)" : "",
@@ -434,7 +434,7 @@ function DashboardTab() {
                     return (
                       <tbody>
                         <tr
-                          className="bg-gray-50 border-b border-gray-700 hover:bg-blue-100"
+                          className="bg-gray-50 border-b border-gray-700 hover:bg-slate-100"
                           style={{
                             backgroundColor:
                               mode === "dark" ? "rgb(46 49 55)" : "",
